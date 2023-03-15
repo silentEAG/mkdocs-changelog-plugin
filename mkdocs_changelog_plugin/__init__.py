@@ -13,11 +13,8 @@ TEMPLATE_DIR = os.path.join(PLUGIN_DIR, "templates/list.html")
 EXTRA_CSS = ["css/changelog.css"]
 
 def get_raw_log(max_count, dir):
-    # import subprocess
     with os.popen(f"git log --name-status --pretty=format:\"%ad%s\" --date=format:\"%Y-%m-%d %H:%M:%S||\" --max-count={max_count} {dir}") as p:
         log_info = p.read()
-    # log_info = subprocess.run(["git", "log", "--name-status", "--pretty=format:%ad%s", "--date=format:%Y-%m-%d %H:%M:%S||", f"--max-count={max_count}", f"{dir}"], shell=True, stdout=subprocess.PIPE)
-    print(log_info)
     return log_info
 
 class ChangeFile:
@@ -57,7 +54,6 @@ class ChangelogPlugin(plugins.BasePlugin):
     def get_change_list(self):
 
         item_list = get_raw_log(self.config.get("max_count"), self.config.get("file_folder")).split("\n\n")
-        print(item_list)
         for tmp_item in item_list:
             item_info = tmp_item.split("\n")
             meta = item_info[0].split("||")
