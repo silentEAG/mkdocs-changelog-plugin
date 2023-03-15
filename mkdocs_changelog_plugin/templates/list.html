@@ -1,0 +1,35 @@
+<h2 id="changelog-title">Changelog<a class="headerlink" href="#changelog-title" title="Permanent link">¶</a></h2>
+
+<p>Last {{change_list.__len__()}} commits: </p>
+
+<div class="timeline">
+    {% for change_item in change_list %}
+        {% if change_item.files.__len__() != 0 %}
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h3 class="timeline-title">{{change_item.message}}</h3>
+                <p class="timeline-date">{{change_item.date}}</p>
+                <ul>
+                    {% for change_file in change_item.files %}
+                        <div class="timeline-file">
+                            
+                                {% if change_map.get(change_file.path) %}
+                                    
+                                    <li>{% if change_file.status == 'A' %}
+                                            [✨新增]
+                                        {% elif change_file.status == 'M' %}
+                                            [🔥更新]
+                                        {% endif %}
+                                        <a href="{{change_map[change_file.path].url}}">{{change_map[change_file.path].title}}</a>
+                                    </li>
+                                    
+                                {% endif %}
+                            
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,1 @@
+# mkdocs-changelog-plugin
