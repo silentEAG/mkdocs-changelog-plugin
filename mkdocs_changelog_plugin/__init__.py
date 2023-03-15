@@ -57,6 +57,7 @@ class ChangelogPlugin(plugins.BasePlugin):
     def get_change_list(self):
 
         item_list = get_raw_log(self.config.get("max_count"), self.config.get("file_folder")).split("\n\n")
+        print(item_list)
         for tmp_item in item_list:
             item_info = tmp_item.split("\n")
             meta = item_info[0].split("||")
