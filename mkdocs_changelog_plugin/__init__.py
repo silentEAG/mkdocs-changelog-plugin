@@ -13,11 +13,11 @@ TEMPLATE_DIR = os.path.join(PLUGIN_DIR, "templates/list.html")
 EXTRA_CSS = ["css/changelog.css"]
 
 def get_raw_log(max_count, dir):
-    import subprocess
-    log_info = subprocess.run(["git", "log", "--name-status", "--pretty=format:%ad%s", "--date=format:%Y-%m-%d %H:%M:%S||", f"--max-count={max_count}", f"{dir}"], shell=True, stdout=subprocess.PIPE)
-    if log_info.stderr:
-        print(log_info.stderr)
-    log_info = log_info.stdout.decode("utf-8")
+    # import subprocess
+    with os.popen(f"git log --name-status --pretty=format:\"%ad%s\" --date=format:\"%Y-%m-%d %H:%M:%S||\" --max-count={max_count} {dir}") as p:
+        log_info = p.read()
+    # log_info = subprocess.run(["git", "log", "--name-status", "--pretty=format:%ad%s", "--date=format:%Y-%m-%d %H:%M:%S||", f"--max-count={max_count}", f"{dir}"], shell=True, stdout=subprocess.PIPE)
+    print(log_info)
     return log_info
 
 class ChangeFile:
